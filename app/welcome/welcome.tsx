@@ -14,7 +14,7 @@ export function Welcome({ message }: { message: string }) {
 						/>
 						<img
 							src={logoDark}
-							alt="React Router"
+							alt="Deepanshu Mehta"
 							className="hidden w-full dark:block"
 						/>
 					</div>
