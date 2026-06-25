@@ -1,14 +1,19 @@
 {
-	"$schema": "./node_modules/wrangler/config-schema.json",
-	"name": "react-router-starter-template",
-	"main": "./workers/app.ts",
-	"compatibility_date": "2025-10-08",
-	"compatibility_flags": ["nodejs_compat"],
-	"observability": {
-		"enabled": true
-	},
-	"upload_source_maps": true,
-	"vars": {
-		"VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare"
-	}
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cloudflare-next-portfolio",
+  "main": "./.open-next/worker.js",
+  "compatibility_date": "2026-06-25",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "build": {
+    "command": "npm run build",
+    "cwd": "."
+  },
+  "upload_source_maps": true,
+  "vars": {
+    "VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare"
+  }
 }
