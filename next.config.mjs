@@ -4,7 +4,12 @@ initOpenNextCloudflareForDev();
 
 const nextConfig = {
   images: {
-    remotePatterns: [],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+    ],
   },
 };
 

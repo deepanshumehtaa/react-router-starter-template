@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Next Portfolio",
-  description: "A modern portfolio built with Next.js and Cloudflare.",
+  title: "Vivid - Premium Photo Gallery",
+  description: "A beautiful, responsive photo gallery adapted for Cloudflare edge deployment.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
