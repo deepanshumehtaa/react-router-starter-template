@@ -8,10 +8,6 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  "build": {
-    "command": "npm run build",
-    "cwd": "."
-  },
   "upload_source_maps": true,
   "vars": {
     "VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare"

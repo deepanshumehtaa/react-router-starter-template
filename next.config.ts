@@ -1,10 +1,7 @@
-import type { NextConfig } from "next";
 import { defineCloudflareConfig } from "@opennextjs/cloudflare";
 
-const nextConfig: NextConfig = {
+export default defineCloudflareConfig({
   typescript: {
     tsconfigPath: "./tsconfig.json",
   },
-};
-
-export default defineCloudflareConfig();
+});
