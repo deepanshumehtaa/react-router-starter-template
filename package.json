@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy": "npm run build",
     "start": "next start",
     "lint": "eslint"
   },
@@ -26,3 +27,4 @@
     "wrangler": "^4.108.0"
   }
 }
+
