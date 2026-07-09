@@ -1,22 +1,25 @@
-import "next";
+interface D1Result<T = unknown> {
+  results: T[];
+  success: boolean;
+  meta: any;
+}
 
-interface D1Database extends Omit<D1Database, 'batch'> {
-  batch: <T = unknown>(statements: D1PreparedStatement[]) => Promise<Array<D1Result<T>>>;
+interface D1PreparedStatement {
+  bind(...values: any[]): D1PreparedStatement;
+  all<T = unknown>(): Promise<D1Result<T>>;
+  run<T = unknown>(): Promise<D1Result<T>>;
+}
+
+interface D1Database {
+  prepare(query: string): D1PreparedStatement;
 }
 
 declare global {
   interface Env {
-    DB: D1Database;
+    DB_BINDING: D1Database;
   }
 
-  var D1Database: { // eslint-disable-line no-var
-    prototype: D1Database;
-    new(): D1Database;
-  };
-
-  namespace Next { // Augment the Next namespace
-    interface RequestContext {
-      env: Env; // Add the 'env' property to RequestContext
-    }
+  interface CloudflareEnv {
+    DB_BINDING: D1Database;
   }
 }
