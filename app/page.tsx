@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+"use client";
+import { useState, useEffect } from "react";
 
 interface Message {
   id: string;
@@ -8,33 +9,33 @@ interface Message {
 
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [newMessage, setNewMessage] = useState('');
+  const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await fetch('/api/messages');
+        const response = await fetch("/api/messages");
         if (response.ok) {
           const data: Message[] = await response.json();
           setMessages(data);
         } else {
-          console.error('Failed to fetch messages:', response.statusText);
+          console.error("Failed to fetch messages:", response.statusText);
         }
       } catch (error) {
-        console.error('Error fetching messages:', error);
+        console.error("Error fetching messages:", error);
       }
     };
     fetchMessages();
   }, []);
 
   const handleSendMessage = async () => {
-    if (newMessage.trim() === '') return;
+    if (newMessage.trim() === "") return;
 
     try {
-      const response = await fetch('/api/messages', {
-        method: 'POST',
+      const response = await fetch("/api/messages", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ content: newMessage }),
       });
@@ -42,12 +43,12 @@ export default function Home() {
       if (response.ok) {
         const savedMessage: Message = await response.json();
         setMessages((prevMessages) => [...prevMessages, savedMessage]);
-        setNewMessage('');
+        setNewMessage("");
       } else {
-        console.error('Failed to send message:', response.statusText);
+        console.error("Failed to send message:", response.statusText);
       }
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error("Error sending message:", error);
     }
   };
 
@@ -58,9 +59,13 @@ export default function Home() {
           {/* ...existing code... */}
 
           <div className="p-4">
-            <label className="sr-only" htmlFor="search">Search chats</label>
+            <label className="sr-only" htmlFor="search">
+              Search chats
+            </label>
             <div className="relative">
-              <span className="pointer-events-none absolute inset-y-0 left-4 flex items-center text-slate-400">🔍</span>
+              <span className="pointer-events-none absolute inset-y-0 left-4 flex items-center text-slate-400">
+                🔍
+              </span>
               <input
                 id="search"
                 type="search"
@@ -78,14 +83,22 @@ export default function Home() {
             <div className="flex items-center gap-4">
               <div className="h-14 w-14 rounded-full bg-slate-100/20" />
               <div>
-                <p className="text-sm uppercase tracking-[0.18em] text-slate-200/75">Chat</p>
+                <p className="text-sm uppercase tracking-[0.18em] text-slate-200/75">
+                  Chat
+                </p>
                 <h2 className="text-xl font-semibold">Your Messages</h2>
               </div>
             </div>
             <div className="flex items-center gap-3 text-lg text-white/85">
-              <button className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20">📞</button>
-              <button className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20">📹</button>
-              <button className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20">⋮</button>
+              <button className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20">
+                📞
+              </button>
+              <button className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20">
+                📹
+              </button>
+              <button className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20">
+                ⋮
+              </button>
             </div>
           </header>
 
@@ -96,7 +109,9 @@ export default function Home() {
                   <div className="max-w-[68%] rounded-[28px] rounded-bl-none bg-[#dcf8c6] px-4 py-3 text-sm leading-6 text-slate-900 shadow-sm">
                     {msg.content}
                   </div>
-                  <span className="text-xs text-slate-500">{new Date(msg.timestamp).toLocaleTimeString()}</span>
+                  <span className="text-xs text-slate-500">
+                    {new Date(msg.timestamp).toLocaleTimeString()}
+                  </span>
                 </div>
               ))}
             </div>
@@ -110,7 +125,7 @@ export default function Home() {
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyPress={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   handleSendMessage();
                 }
               }}
@@ -118,7 +133,9 @@ export default function Home() {
             <button
               onClick={handleSendMessage}
               className="absolute inset-y-0 right-6 my-auto inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#25d366] text-white transition hover:bg-[#1DA855]"
-            >➡️</button>
+            >
+              ➡️
+            </button>
           </div>
         </section>
       </main>
