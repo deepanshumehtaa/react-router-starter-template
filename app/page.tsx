@@ -70,24 +70,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-4 pb-6">
-            <article
-              key="current-chat"
-              className="group mb-3 rounded-3xl border border-slate-200 bg-slate-50 p-4 transition hover:border-slate-300 hover:bg-slate-100"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-slate-200 text-lg text-slate-700">
-                    You
-                  </div>
-                  <div>
-                    <h2 className="text-base font-semibold text-slate-900">Your Chat</h2>
-                    <p className="mt-1 text-sm text-slate-600">Start typing to save messages</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </div>
+          
         </aside>
 
         <section className="flex min-h-[640px] flex-1 flex-col bg-[radial-gradient(circle_at_top,_rgba(37,211,102,0.2),transparent_30%),#fbfcfa]">
@@ -143,43 +126,4 @@ export default function Home() {
   );
 }
 
-              <div className="flex justify-end gap-3">
-                <span className="hidden text-xs text-slate-500 md:block">12:46</span>
-                <div className="max-w-[68%] rounded-[28px] rounded-bl-none bg-[#dcf8c6] px-4 py-3 text-sm leading-6 text-slate-900 shadow-sm">
-                  Perfect, I’ll bring the drinks.
-                </div>
-              </div>
 
-              <div className="flex items-end gap-3">
-                <div className="max-w-[68%] rounded-[28px] rounded-br-none bg-white px-4 py-3 text-sm leading-6 text-slate-900 shadow-sm">
-                  Do you want me to pick up something else?
-                </div>
-                <span className="text-xs text-slate-500">12:47</span>
-              </div>
-
-              <div className="flex justify-end gap-3">
-                <span className="hidden text-xs text-slate-500 md:block">12:48</span>
-                <div className="max-w-[68%] rounded-[28px] rounded-bl-none bg-[#dcf8c6] px-4 py-3 text-sm leading-6 text-slate-900 shadow-sm">
-                  Maybe chips and salsa. Thanks!
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="absolute inset-x-0 bottom-0 border-t border-slate-200 bg-[#f8f9f5] px-5 py-4">
-            <div className="mx-auto flex max-w-[1100px] items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-2 shadow-sm">
-              <button className="h-11 w-11 rounded-full text-xl text-[#25d366] transition hover:bg-slate-100">😊</button>
-              <input
-                className="flex-1 bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
-                placeholder="Type a message"
-              />
-              <button className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#25d366] text-white transition hover:bg-[#1ebc5b]">
-                ➤
-              </button>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
-  );
-}
