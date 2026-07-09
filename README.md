@@ -79,3 +79,4 @@ export default defineCloudflareConfig({
 });
 ```
 
+check build if it is building or not: `npx open-next build --debug`

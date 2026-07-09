@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json", // specifies the schema for wrangler configuration
-  "name": "core-app", //"react-router-starter-template",
+  "name": "core-app", //"react-router-starter-template",  // name of the project
   "main": "./.open-next/worker.js",  // enntry point for the worker
   "compatibility_date": "2026-06-25",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"], // enable Node.js compatibility and restrict global fetch to public URLs
@@ -13,10 +13,16 @@
   },
 
   "d1_databases": [
-  {
-    "binding": "DB_BINDING",
-    "database_name": "test-lite-db",
-    "database_id": "feb3521b-04c3-4e10-8b97-8adf5145be0d"
+    {
+      "binding": "DB_BINDING",
+      "database_name": "test-lite-db",
+      "database_id": "feb3521b-04c3-4e10-8b97-8adf5145be0d"
+    }
+  ],
+
+  "build": {
+    "command": "npm run build && npx open-next build",
+    "cwd": ".",
+    "watch_dir": "src"
   }
-],
 }
