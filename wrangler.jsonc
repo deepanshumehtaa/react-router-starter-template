@@ -1,14 +1,22 @@
 {
-  "$schema": "./node_modules/wrangler/config-schema.json",
+  "$schema": "./node_modules/wrangler/config-schema.json", // specifies the schema for wrangler configuration
   "name": "react-router-starter-template",
-  "main": "./.open-next/server/index.js",
+  "main": "./.open-next/worker.js",  // enntry point for the worker
   "compatibility_date": "2026-06-25",
-  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"], // enable Node.js compatibility and restrict global fetch to public URLs
   "assets": {
     "directory": "./.open-next/static"
   },
   "upload_source_maps": true,
   "vars": {
     "VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare"
+  },
+
+  "d1_databases": [
+  {
+    "binding": "DB_BINDING",
+    "database_name": "test-lite-db",
+    "database_id": "feb3521b-04c3-4e10-8b97-8adf5145be0d"
   }
+],
 }
