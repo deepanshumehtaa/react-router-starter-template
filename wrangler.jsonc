@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
 
-  "name": "react-router-starter-template",
+  "name": "core-app",
 
   "main": "./.open-next/worker.js",
 
