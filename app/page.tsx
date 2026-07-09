@@ -124,8 +124,9 @@ export default function Home() {
               className="w-full rounded-full border border-slate-200 bg-slate-100/90 px-5 py-3 text-sm text-slate-900 outline-none transition focus:border-[#25d366] focus:ring-2 focus:ring-[#25d366]/20"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              onKeyPress={(e) => {
+              onKeyDown={(e) => {
                 if (e.key === "Enter") {
+                  e.preventDefault();
                   handleSendMessage();
                 }
               }}
