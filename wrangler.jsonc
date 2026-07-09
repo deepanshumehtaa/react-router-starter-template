@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json", // specifies the schema for wrangler configuration
-  "name": "react-router-starter-template",
+  "name": "core-app", //"react-router-starter-template",
   "main": "./.open-next/worker.js",  // enntry point for the worker
   "compatibility_date": "2026-06-25",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"], // enable Node.js compatibility and restrict global fetch to public URLs
