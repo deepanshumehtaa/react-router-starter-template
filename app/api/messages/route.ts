@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createMessageTable, getMessages, insertMessage } from '../../../lib/database';
+import { createMessageTable, getMessages, insertMessage, Env } from '../../../lib/database';
 
 export const runtime = 'edge';
 
-export async function GET(request: NextRequest, { env }: { env: { DB: D1Database } }) {
+export async function GET(request: NextRequest, context: { env?: Env }) {
+  const env = context.env as Env;
+  if (!env || !env.DB) {
+    return NextResponse.json({ error: 'Database environment not configured.' }, { status: 500 });
+  }
   try {
     await createMessageTable(env.DB);
     const messages = await getMessages(env.DB);
@@ -13,7 +17,11 @@ export async function GET(request: NextRequest, { env }: { env: { DB: D1Database
   }
 }
 
-export async function POST(request: NextRequest, { env }: { env: { DB: D1Database } }) {
+export async function POST(request: NextRequest, context: { env?: Env }) {
+  const env = context.env as Env;
+  if (!env || !env.DB) {
+    return NextResponse.json({ error: 'Database environment not configured.' }, { status: 500 });
+  }
   try {
     await createMessageTable(env.DB);
     const { content } = await request.json();
