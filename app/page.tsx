@@ -1,18 +1,61 @@
+import { useState, useEffect } from 'react';
+
+interface Message {
+  id: string;
+  content: string;
+  timestamp: number;
+}
+
 export default function Home() {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [newMessage, setNewMessage] = useState('');
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await fetch('/api/messages');
+        if (response.ok) {
+          const data: Message[] = await response.json();
+          setMessages(data);
+        } else {
+          console.error('Failed to fetch messages:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching messages:', error);
+      }
+    };
+    fetchMessages();
+  }, []);
+
+  const handleSendMessage = async () => {
+    if (newMessage.trim() === '') return;
+
+    try {
+      const response = await fetch('/api/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: newMessage }),
+      });
+
+      if (response.ok) {
+        const savedMessage: Message = await response.json();
+        setMessages((prevMessages) => [...prevMessages, savedMessage]);
+        setNewMessage('');
+      } else {
+        console.error('Failed to send message:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#d7eadf] text-slate-900">
       <main className="mx-auto flex min-h-screen max-w-[1400px] flex-col overflow-hidden rounded-[28px] bg-[#e6f0eb] shadow-xl shadow-slate-900/5 md:h-[calc(100vh-2rem)] md:flex-row">
         <aside className="flex h-full w-full flex-col border-r border-slate-200 bg-white md:w-[400px]">
-          <div className="flex items-center justify-between gap-3 border-b border-slate-200 bg-[#075e54] px-5 py-4 text-white">
-            <div>
-              <p className="text-sm uppercase tracking-[0.2em] text-slate-200/85">WhatsApp</p>
-              <h1 className="text-2xl font-semibold">Chats</h1>
-            </div>
-            <div className="flex items-center gap-3 text-[18px]">
-              <button className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/15 transition hover:bg-white/25">⚙️</button>
-              <button className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/15 transition hover:bg-white/25">✉️</button>
-            </div>
-          </div>
+          {/* ...existing code... */}
 
           <div className="p-4">
             <label className="sr-only" htmlFor="search">Search chats</label>
@@ -28,49 +71,22 @@ export default function Home() {
           </div>
 
           <div className="flex-1 overflow-y-auto px-4 pb-6">
-            {[
-              {
-                name: "Tina",
-                message: "See you in 10 minutes!",
-                time: "12:43",
-                status: "online",
-              },
-              {
-                name: "Family Group",
-                message: "Dinner is ready. Come soon!",
-                time: "11:56",
-                status: "3 new",
-              },
-              {
-                name: "Work Bot",
-                message: "Your report is due tomorrow.",
-                time: "09:20",
-                status: "offline",
-              },
-            ].map((chat) => (
-              <article
-                key={chat.name}
-                className="group mb-3 rounded-3xl border border-slate-200 bg-slate-50 p-4 transition hover:border-slate-300 hover:bg-slate-100"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-slate-200 text-lg text-slate-700">
-                      {chat.name.charAt(0)}
-                    </div>
-                    <div>
-                      <h2 className="text-base font-semibold text-slate-900">{chat.name}</h2>
-                      <p className="mt-1 text-sm text-slate-600">{chat.message}</p>
-                    </div>
+            <article
+              key="current-chat"
+              className="group mb-3 rounded-3xl border border-slate-200 bg-slate-50 p-4 transition hover:border-slate-300 hover:bg-slate-100"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-slate-200 text-lg text-slate-700">
+                    You
                   </div>
-                  <div className="text-right">
-                    <p className="text-xs text-slate-500">{chat.time}</p>
-                    <span className={`mt-2 inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold ${chat.status === 'online' ? 'bg-emerald-100 text-emerald-800' : chat.status === 'offline' ? 'bg-slate-100 text-slate-600' : 'bg-emerald-100 text-emerald-800'}`}>
-                      {chat.status}
-                    </span>
+                  <div>
+                    <h2 className="text-base font-semibold text-slate-900">Your Chat</h2>
+                    <p className="mt-1 text-sm text-slate-600">Start typing to save messages</p>
                   </div>
                 </div>
-              </article>
-            ))}
+              </div>
+            </article>
           </div>
         </aside>
 
@@ -80,7 +96,7 @@ export default function Home() {
               <div className="h-14 w-14 rounded-full bg-slate-100/20" />
               <div>
                 <p className="text-sm uppercase tracking-[0.18em] text-slate-200/75">Chat</p>
-                <h2 className="text-xl font-semibold">Tina</h2>
+                <h2 className="text-xl font-semibold">Your Messages</h2>
               </div>
             </div>
             <div className="flex items-center gap-3 text-lg text-white/85">
@@ -92,12 +108,40 @@ export default function Home() {
 
           <div className="flex-1 overflow-y-auto p-6 pb-28">
             <div className="space-y-4">
-              <div className="flex items-end gap-3">
-                <div className="max-w-[68%] rounded-[28px] rounded-br-none bg-white px-4 py-3 text-sm leading-6 text-slate-900 shadow-sm">
-                  Sure! I’m on my way now.
+              {messages.map((msg) => (
+                <div key={msg.id} className="flex items-end gap-3 justify-end">
+                  <div className="max-w-[68%] rounded-[28px] rounded-bl-none bg-[#dcf8c6] px-4 py-3 text-sm leading-6 text-slate-900 shadow-sm">
+                    {msg.content}
+                  </div>
+                  <span className="text-xs text-slate-500">{new Date(msg.timestamp).toLocaleTimeString()}</span>
                 </div>
-                <span className="text-xs text-slate-500">12:45</span>
-              </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative border-t border-slate-200 bg-white p-6">
+            <input
+              type="text"
+              placeholder="Type a message..."
+              className="w-full rounded-full border border-slate-200 bg-slate-100/90 px-5 py-3 text-sm text-slate-900 outline-none transition focus:border-[#25d366] focus:ring-2 focus:ring-[#25d366]/20"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleSendMessage();
+                }
+              }}
+            />
+            <button
+              onClick={handleSendMessage}
+              className="absolute inset-y-0 right-6 my-auto inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#25d366] text-white transition hover:bg-[#1DA855]"
+            >➡️</button>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
 
               <div className="flex justify-end gap-3">
                 <span className="hidden text-xs text-slate-500 md:block">12:46</span>
