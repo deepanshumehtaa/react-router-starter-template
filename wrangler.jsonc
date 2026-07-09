@@ -21,7 +21,7 @@
   ],
 
   "build": {
-    "command": "npm run build && npx open-next build",
+    "command": "npm run build:cf",
     "cwd": ".",
     "watch_dir": "src"
   }

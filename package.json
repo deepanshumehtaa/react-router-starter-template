@@ -3,14 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
-    "build:all": "next build && open-next build",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "open-next": "npx open-next build",
+    "build:cf": "npm run build && npm run open-next",
     "start": "next start",
-    "lint": "eslint",
-    "open-next": "open-next build",
-    "cf:build": "opennextjs-cloudflare build"
+    "lint": "next lint"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.20.1",
