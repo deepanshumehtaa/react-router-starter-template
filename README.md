@@ -45,27 +45,41 @@ to deploy on claudflare worker:
 
 > npm install -D wrangler@latest
 
-> create wrangler.json
+> create wrangler.jsonc and not wrangler.json, if wrangler.json is there delete that
 
 ```
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "cloudflare-next-portfolio",
+
+  "name": "core-app",
+
   "main": "./.open-next/worker.js",
+
   "compatibility_date": "2026-06-25",
-  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
+
   "assets": {
-    "directory": ".open-next/assets",
+    "directory": "./.open-next/assets",
     "binding": "ASSETS"
   },
-  "build": {
-    "command": "npm run build",
-    "cwd": "."
-  },
+
   "upload_source_maps": true,
+
   "vars": {
     "VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare"
-  }
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB_BINDING",
+      "database_name": "test-lite-db",
+      "database_id": "feb3521b-04c3-4e10-8b97-8adf5145be0d"
+    }
+  ]
 }
 ```
 
@@ -80,3 +94,26 @@ export default defineCloudflareConfig({
 ```
 
 check build if it is building or not: `npx open-next build --debug`
+
+
+> Package.json need to have:
+```
+"scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "build:cf": "npx @opennextjs/cloudflare build",
+    "preview:cf": "npx @opennextjs/cloudflare preview",
+    "deploy:cf": "npx @opennextjs/cloudflare deploy",
+    "start": "next start",
+    "lint": "next lint"
+  },
+```
+
+# Most Important:
+1. check in your wrangler.jsonc, `name` should be same as app name in cloudflare
+2. In Your Cloudflare dashboard check commands that being executed to buld and deploy, in settings section under `Build configuration` and set those to:
+```
+Build command: npm run build:cf
+Deploy command: npm run deploy
+Non-production branch deploy command: npm run deploy
+```
