@@ -1,3 +1,5 @@
+import "next";
+
 interface D1Database extends Omit<D1Database, 'batch'> {
   batch: <T = unknown>(statements: D1PreparedStatement[]) => Promise<Array<D1Result<T>>>;
 }
@@ -11,4 +13,10 @@ declare global {
     prototype: D1Database;
     new(): D1Database;
   };
+
+  namespace Next { // Augment the Next namespace
+    interface RequestContext {
+      env: Env; // Add the 'env' property to RequestContext
+    }
+  }
 }

@@ -3,11 +3,7 @@ import { createMessageTable, getMessages, insertMessage, Env } from '../../../li
 
 export const runtime = 'edge';
 
-export async function GET(request: NextRequest, context: { env?: Env }) {
-  const env = context.env as Env;
-  if (!env || !env.DB) {
-    return NextResponse.json({ error: 'Database environment not configured.' }, { status: 500 });
-  }
+export async function GET(request: NextRequest, { env }: { env: Env }) {
   try {
     await createMessageTable(env.DB);
     const messages = await getMessages(env.DB);
@@ -17,11 +13,7 @@ export async function GET(request: NextRequest, context: { env?: Env }) {
   }
 }
 
-export async function POST(request: NextRequest, context: { env?: Env }) {
-  const env = context.env as Env;
-  if (!env || !env.DB) {
-    return NextResponse.json({ error: 'Database environment not configured.' }, { status: 500 });
-  }
+export async function POST(request: NextRequest, { env }: { env: Env }) {
   try {
     await createMessageTable(env.DB);
     const { content } = await request.json();
